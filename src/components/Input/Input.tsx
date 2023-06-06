@@ -3,24 +3,27 @@ import { Button, Form, Input, Space } from "antd";
 import { v4 as uuidv4 } from "uuid";
 
 import { EStatus } from "../../pages/Todos/types";
-import { IInputCompProps } from "./types";
+import { useStores } from "../../rootStoreContext";
 
-const InputComp: FC<IInputCompProps> = ({ todos, setTodos }) => {
+const InputComp: FC = () => {
+  const {
+    todos: { addTodo },
+  } = useStores();
+
   const [form] = Form.useForm();
 
-  const addTodo = ({ todoText }: { todoText: string }) => {
-    const todo = {
+  const handlerAddTodo = ({ todoText }: { todoText: string }) => {
+    addTodo({
       id: uuidv4(),
       text: todoText,
       status: EStatus.InProgress,
       isChecked: false,
-    };
-    setTodos([...todos, todo]);
+    });
     form.resetFields();
   };
 
   return (
-    <Form form={form} layout="vertical" onFinish={addTodo}>
+    <Form form={form} layout="vertical" onFinish={handlerAddTodo}>
       <Form.Item name="todoText">
         <Input placeholder="input todo" />
       </Form.Item>

@@ -1,82 +1,54 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Checkbox, List, Typography } from "antd";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { DeleteOutlined } from "@ant-design/icons";
-
-import { EStatus, ITodo } from "./types";
+import { observer } from "mobx-react-lite";
 
 import InputComp from "../../components/Input";
 import Status from "../../components/Status";
 
+import { useStores } from "../../rootStoreContext";
+
 const { Text } = Typography;
 
-const Todos: FC = () => {
-  const [todos, setTodos] = useState<ITodo[]>([
-    {
-      id: "1",
-      text: "Racing car sprays burning fuel into crowd. Racing car sprays burning fuel into crowd. Racing car sprays burning fuel into crowd.Racing car sprays burning fuel into crowd.Racing car sprays burning fuel into crowd.Racing car sprays burning fuel into crowd.",
-      status: EStatus.InProgress,
-      isChecked: false,
+const Todos: FC = observer(() => {
+  const {
+    todos: {
+      todos,
+      deleteTodo,
+      updateTodos,
+      addToArchive,
+      total,
+      inProgress,
+      ready,
     },
-    {
-      id: "2",
-      text: "Japanese princess to wed commoner.",
-      status: EStatus.Ready,
-      isChecked: true,
-    },
-    {
-      id: "3",
-      text: "Australian walks 100km after outback crash.",
-      status: EStatus.InProgress,
-      isChecked: false,
-    },
-  ]);
-  const [archive, setArchive] = useState<ITodo[]>([]);
-
-  const handleChange = (e: CheckboxChangeEvent, id: string) => {
-    const updatedTodos = todos?.map((todo) =>
-      todo.id === id
-        ? {
-            ...todo,
-            isChecked: !todo.isChecked,
-            status: todo.isChecked ? EStatus.Ready : EStatus.InProgress,
-          }
-        : todo
-    );
-    setTodos(updatedTodos);
-  };
+  } = useStores();
 
   const handleDelete = (id: string) => {
-    const updatedTodos = todos?.reduce(
-      (acc: ITodo[], todo) =>
-        todo.id === id ? acc.concat({ ...todo, status: EStatus.Archive }) : acc,
-      []
-    );
-    setArchive(updatedTodos);
-    setTodos(todos?.filter((todo) => todo.id !== id));
+    addToArchive(id);
+    deleteTodo(id);
   };
-
-  const total = todos?.length;
-  const inProgress = todos?.reduce(
-    (acc: number, todo) => (todo.isChecked ? acc : acc + 1),
-    0
-  );
-  const ready = total - inProgress;
 
   return (
     <>
       <Status total={total} inProgress={inProgress} ready={ready} />
-      <InputComp todos={todos} setTodos={setTodos} />
+      <InputComp />
       <List
         bordered
         dataSource={todos}
         renderItem={(todo) => (
           <List.Item>
             <Checkbox
-              onChange={(e) => handleChange(e, todo.id)}
+              onChange={() => updateTodos(todo.id)}
               checked={todo.isChecked}
             />
-            <Text delete={todo.isChecked} style={{ padding: "0 20px" }}>
+            <Text
+              delete={todo.isChecked}
+              style={{
+                margin: "0 20px",
+                borderBottom: `2px solid ${
+                  todo.isChecked ? "#52c41a" : "#faad14"
+                }`,
+              }}>
               {todo.text}
             </Text>
             <DeleteOutlined onClick={() => handleDelete(todo.id)} />
@@ -85,6 +57,6 @@ const Todos: FC = () => {
       />
     </>
   );
-};
+});
 
 export default Todos;

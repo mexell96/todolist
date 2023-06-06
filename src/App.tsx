@@ -5,8 +5,11 @@ import Archive from "./pages/Archive";
 
 import Navigation from "./components/Navigation";
 
-const App = () => {
-  return (
+import { RootStoreContext } from "./rootStoreContext";
+import RootStore from "./store/rootStore";
+
+const App = () => (
+  <RootStoreContext.Provider value={new RootStore()}>
     <BrowserRouter>
       <Navigation />
       <Routes>
@@ -14,7 +17,7 @@ const App = () => {
         <Route path="/archive" element={<Archive />} />
       </Routes>
     </BrowserRouter>
-  );
-};
+  </RootStoreContext.Provider>
+);
 
 export default App;
