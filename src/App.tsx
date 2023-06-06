@@ -10,7 +10,7 @@ import RootStore from "./store/rootStore";
 
 const App = () => (
   <RootStoreContext.Provider value={new RootStore()}>
-    <BrowserRouter>
+    <BrowserRouter basename="/todolist">
       <Navigation />
       <Routes>
         <Route path="/" element={<Todos />} />
