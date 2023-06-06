@@ -5,6 +5,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 
 import { EStatus, ITodo } from "./types";
 
+import InputComp from "../../components/Input";
+
 const Todos: FC = () => {
   const [todos, setTodos] = useState<ITodo[]>([
     {
@@ -52,20 +54,23 @@ const Todos: FC = () => {
   };
 
   return (
-    <List
-      bordered
-      dataSource={todos}
-      renderItem={(todo) => (
-        <List.Item>
-          <Checkbox
-            onChange={(e) => handleChange(e, todo.id)}
-            checked={todo.isChecked}
-          />
-          <p>{todo.text}</p>
-          <DeleteOutlined onClick={() => handleDelete(todo.id)} />
-        </List.Item>
-      )}
-    />
+    <>
+      <InputComp todos={todos} setTodos={setTodos} />
+      <List
+        bordered
+        dataSource={todos}
+        renderItem={(todo) => (
+          <List.Item>
+            <Checkbox
+              onChange={(e) => handleChange(e, todo.id)}
+              checked={todo.isChecked}
+            />
+            <p>{todo.text}</p>
+            <DeleteOutlined onClick={() => handleDelete(todo.id)} />
+          </List.Item>
+        )}
+      />
+    </>
   );
 };
 
