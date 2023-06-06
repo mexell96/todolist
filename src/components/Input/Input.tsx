@@ -25,7 +25,7 @@ const InputComp: FC = () => {
   return (
     <Form form={form} layout="vertical" onFinish={handlerAddTodo}>
       <Form.Item name="todoText">
-        <Input placeholder="input todo" />
+        <Input placeholder="Add todo" />
       </Form.Item>
       <Form.Item>
         <Space>

@@ -26,6 +26,8 @@ class CounterStore {
   archiveTodos: ITodo[] = [];
   filteredStatusTodos: ITodo[] = [];
   filterStatus: EStatus = EStatus.Total;
+  searchText: string = "";
+  searchTextTodos: ITodo[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -69,6 +71,15 @@ class CounterStore {
     );
   };
 
+  searchTodos = (text: string) => {
+    this.searchText = text;
+    this.searchTextTodos = this.todos?.reduce(
+      (arr: ITodo[], todo) =>
+        todo.text.indexOf(text) !== -1 ? arr.concat(todo) : arr,
+      []
+    );
+  };
+
   get total() {
     return this.todos?.length;
   }
@@ -82,6 +93,22 @@ class CounterStore {
 
   get ready() {
     return this.total - this.inProgress;
+  }
+
+  get list() {
+    if (this.filterStatus !== EStatus.Total && this.searchText) {
+      return this.filteredStatusTodos?.reduce(
+        (arr: ITodo[], todo) =>
+          todo.text.indexOf(this.searchText) !== -1 ? arr.concat(todo) : arr,
+        []
+      );
+    } else if (this.filterStatus !== EStatus.Total) {
+      return this.filteredStatusTodos;
+    } else if (this.searchText) {
+      return this.searchTextTodos;
+    } else {
+      return this.todos;
+    }
   }
 }
 

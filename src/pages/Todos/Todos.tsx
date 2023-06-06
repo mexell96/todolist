@@ -3,26 +3,24 @@ import { Checkbox, List, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 
-import InputComp from "../../components/Input";
+import Input from "../../components/Input";
 import Status from "../../components/Status";
+import Search from "../../components/Search";
 
 import { useStores } from "../../rootStoreContext";
-import { EStatus } from "./types";
 
 const { Text } = Typography;
 
 const Todos: FC = observer(() => {
   const {
     todos: {
-      todos,
       deleteTodo,
       updateTodos,
       addToArchive,
       total,
       inProgress,
       ready,
-      filteredStatusTodos,
-      filterStatus,
+      list,
     },
   } = useStores();
 
@@ -31,12 +29,11 @@ const Todos: FC = observer(() => {
     deleteTodo(id);
   };
 
-  const list = filterStatus !== EStatus.Total ? filteredStatusTodos : todos;
-
   return (
     <>
       <Status total={total} inProgress={inProgress} ready={ready} />
-      <InputComp />
+      <Search />
+      <Input />
       <List
         bordered
         dataSource={list}
