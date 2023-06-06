@@ -1,6 +1,6 @@
 {
-  "short_name": "Todolist",
-  "name": "Todolist",
+  "short_name": "todolist",
+  "name": "todolist",
   "icons": [],
   "start_url": ".",
   "display": "standalone",
