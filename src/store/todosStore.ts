@@ -51,16 +51,10 @@ class CounterStore {
   };
 
   deleteTodo = (id: string) => {
+    const deletedTodo = this.todos?.filter((todo) => todo?.id === id);
+    this.archiveTodos.push(deletedTodo?.[0]);
     this.todos = this.todos?.filter((todo) => todo?.id !== id);
     this.setFilteredStatus(this.filterStatus);
-  };
-
-  addToArchive = (id: string) => {
-    this.archiveTodos = this.todos?.reduce(
-      (acc: ITodo[], todo) =>
-        todo.id === id ? acc.concat({ ...todo, status: EStatus.Archive }) : acc,
-      []
-    );
   };
 
   setFilteredStatus = (status: EStatus) => {

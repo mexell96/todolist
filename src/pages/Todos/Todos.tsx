@@ -13,19 +13,10 @@ const { Text } = Typography;
 
 const Todos: FC = observer(() => {
   const {
-    todos: {
-      deleteTodo,
-      updateTodos,
-      addToArchive,
-      total,
-      inProgress,
-      ready,
-      list,
-    },
+    todos: { deleteTodo, updateTodos, total, inProgress, ready, list },
   } = useStores();
 
   const handleDelete = (id: string) => {
-    addToArchive(id);
     deleteTodo(id);
   };
 
@@ -46,7 +37,7 @@ const Todos: FC = observer(() => {
             <Text
               delete={todo.isChecked}
               style={{
-                margin: "0 20px",
+                margin: "0 auto 0 20px",
                 borderBottom: `2px solid ${
                   todo.isChecked ? "#52c41a" : "#faad14"
                 }`,
