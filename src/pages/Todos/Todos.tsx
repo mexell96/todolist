@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { Checkbox, List } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { DeleteOutlined } from "@ant-design/icons";
 
 import { EStatus, ITodo } from "./types";
 
@@ -25,6 +26,7 @@ const Todos: FC = () => {
       isChecked: false,
     },
   ]);
+  const [archive, setArchive] = useState<ITodo[]>([]);
 
   const handleChange = (e: CheckboxChangeEvent, id: string) => {
     const updatedTodos = todos.map((todo) =>
@@ -39,6 +41,16 @@ const Todos: FC = () => {
     setTodos(updatedTodos);
   };
 
+  const handleDelete = (id: string) => {
+    const updatedTodos = todos.reduce(
+      (acc: ITodo[], todo) =>
+        todo.id === id ? acc.concat({ ...todo, status: EStatus.Archive }) : acc,
+      []
+    );
+    setArchive(updatedTodos);
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   return (
     <List
       bordered
@@ -50,6 +62,7 @@ const Todos: FC = () => {
             checked={todo.isChecked}
           />
           <p>{todo.text}</p>
+          <DeleteOutlined onClick={() => handleDelete(todo.id)} />
         </List.Item>
       )}
     />
