@@ -1,13 +1,9 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { Button, Form, Input, Space } from "antd";
 import { v4 as uuidv4 } from "uuid";
 
-import { EStatus, ITodo } from "../../pages/Todos/types";
-
-interface IInputCompProps {
-  todos: ITodo[];
-  setTodos: Dispatch<SetStateAction<ITodo[]>>;
-}
+import { EStatus } from "../../pages/Todos/types";
+import { IInputCompProps } from "./types";
 
 const InputComp: FC<IInputCompProps> = ({ todos, setTodos }) => {
   const [form] = Form.useForm();
