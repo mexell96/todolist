@@ -74,6 +74,10 @@ class CounterStore {
     );
   };
 
+  updatePositionTodos = (todos: ITodo[]) => {
+    this.todos = todos;
+  };
+
   get total() {
     return this.todos?.length;
   }
