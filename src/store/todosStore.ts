@@ -23,8 +23,9 @@ class CounterStore {
       isChecked: false,
     },
   ];
-
   archiveTodos: ITodo[] = [];
+  filteredStatusTodos: ITodo[] = [];
+  filterStatus: EStatus = EStatus.Total;
 
   constructor() {
     makeAutoObservable(this);
@@ -40,20 +41,30 @@ class CounterStore {
         ? {
             ...todo,
             isChecked: !todo.isChecked,
-            status: todo.isChecked ? EStatus.Ready : EStatus.InProgress,
+            status: todo.isChecked ? EStatus.InProgress : EStatus.Ready,
           }
         : todo
     );
+    this.setFilteredStatus(this.filterStatus);
   };
 
   deleteTodo = (id: string) => {
     this.todos = this.todos?.filter((todo) => todo?.id !== id);
+    this.setFilteredStatus(this.filterStatus);
   };
 
   addToArchive = (id: string) => {
     this.archiveTodos = this.todos?.reduce(
       (acc: ITodo[], todo) =>
         todo.id === id ? acc.concat({ ...todo, status: EStatus.Archive }) : acc,
+      []
+    );
+  };
+
+  setFilteredStatus = (status: EStatus) => {
+    this.filterStatus = status;
+    this.filteredStatusTodos = this.todos?.reduce(
+      (acc: ITodo[], todo) => (todo.status === status ? acc.concat(todo) : acc),
       []
     );
   };
@@ -68,6 +79,7 @@ class CounterStore {
       0
     );
   }
+
   get ready() {
     return this.total - this.inProgress;
   }

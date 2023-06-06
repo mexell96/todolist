@@ -7,6 +7,7 @@ import InputComp from "../../components/Input";
 import Status from "../../components/Status";
 
 import { useStores } from "../../rootStoreContext";
+import { EStatus } from "./types";
 
 const { Text } = Typography;
 
@@ -20,6 +21,8 @@ const Todos: FC = observer(() => {
       total,
       inProgress,
       ready,
+      filteredStatusTodos,
+      filterStatus,
     },
   } = useStores();
 
@@ -28,13 +31,15 @@ const Todos: FC = observer(() => {
     deleteTodo(id);
   };
 
+  const list = filterStatus !== EStatus.Total ? filteredStatusTodos : todos;
+
   return (
     <>
       <Status total={total} inProgress={inProgress} ready={ready} />
       <InputComp />
       <List
         bordered
-        dataSource={todos}
+        dataSource={list}
         renderItem={(todo) => (
           <List.Item>
             <Checkbox

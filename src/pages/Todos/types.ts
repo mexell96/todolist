@@ -2,6 +2,7 @@ export enum EStatus {
   InProgress = "InProgress",
   Ready = "Ready",
   Archive = "Archive",
+  Total = "Total",
 }
 
 export interface ITodo {
