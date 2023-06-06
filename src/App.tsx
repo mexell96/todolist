@@ -1,8 +1,14 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Todos from "./pages/Todos";
+
 const App = () => {
   return (
-    <div>
-      <span>App</span>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Todos />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
