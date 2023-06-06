@@ -12,10 +12,12 @@ const App = () => (
   <RootStoreContext.Provider value={new RootStore()}>
     <BrowserRouter basename="/todolist">
       <Navigation />
-      <Routes>
-        <Route path="/" element={<Todos />} />
-        <Route path="/archive" element={<Archive />} />
-      </Routes>
+      <div style={{ paddingTop: "70px" }}>
+        <Routes>
+          <Route path="/" element={<Todos />} />
+          <Route path="/archive" element={<Archive />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   </RootStoreContext.Provider>
 );

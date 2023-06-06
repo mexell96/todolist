@@ -14,7 +14,7 @@ const Archive: FC = observer(() => {
   return (
     <List
       style={{
-        margin: "20px 0",
+        margin: "0px 16px 20px",
       }}
       bordered
       dataSource={archiveTodos}

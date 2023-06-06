@@ -26,6 +26,13 @@ const Todos: FC = () => {
       selectedKeys={[current]}
       mode="horizontal"
       items={items}
+      style={{
+        position: "fixed",
+        top: "0",
+        width: "100%",
+        background: "white",
+        zIndex: "1000",
+      }}
     />
   );
 };

@@ -13,7 +13,7 @@ const Status: FC<IStatusProps> = ({ total, inProgress, ready }) => {
   } = useStores();
 
   return (
-    <div style={{ margin: "20px 16px" }}>
+    <div style={{ margin: "0px 16px 20px" }}>
       <Radio.Group
         onChange={(e: RadioChangeEvent) => setFilteredStatus(e.target.value)}
         value={filterStatus}>
