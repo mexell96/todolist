@@ -60,6 +60,10 @@ class CounterStore {
     const deletedTodo = this.todos?.filter((todo) => todo?.id === id);
     this.archiveTodos.push(deletedTodo?.[0]);
     this.todos = this.todos?.filter((todo) => todo?.id !== id);
+    this.searchTextTodos = this.searchTextTodos?.filter(
+      (todo) => todo?.id !== id
+    );
+
     this.setFilteredStatus(this.filterStatus);
   };
 
