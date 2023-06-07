@@ -3,26 +3,7 @@ import { makeAutoObservable } from "mobx";
 import { EStatus, ITodo } from "../pages/Todos/types";
 
 class CounterStore {
-  todos: ITodo[] = [
-    {
-      id: "1",
-      text: "Racing car sprays burning fuel into crowd. Racing car sprays burning fuel into crowd. Racing car sprays burning fuel into crowd.Racing car sprays burning fuel into crowd.Racing car sprays burning fuel into crowd.Racing car sprays burning fuel into crowd.",
-      status: EStatus.InProgress,
-      isChecked: false,
-    },
-    {
-      id: "2",
-      text: "Japanese princess to wed commoner.",
-      status: EStatus.Ready,
-      isChecked: true,
-    },
-    {
-      id: "3",
-      text: "Australian walks 100km after outback crash.",
-      status: EStatus.InProgress,
-      isChecked: false,
-    },
-  ];
+  todos: ITodo[] = [];
   archiveTodos: ITodo[] = [];
   filteredStatusTodos: ITodo[] = [];
   filterStatus: EStatus = EStatus.Total;
