@@ -52,6 +52,7 @@ const Todos: FC = observer(() => {
       <Search />
       <Input />
       <List
+        locale={{ emptyText: "No todos" }}
         bordered
         dataSource={list}
         renderItem={(todo, index) => (
