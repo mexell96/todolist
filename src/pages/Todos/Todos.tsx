@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useState } from "react";
 import { Checkbox, List, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
@@ -28,58 +28,62 @@ const Todos: FC = observer(() => {
     deleteTodo(id);
   };
 
-  const dragItem = useRef<number | null>(null);
-  const dragOverItem = useRef<number | null>(null);
+  const [newIndex, setIndex] = useState(0);
 
-  const drop = () => {
-    if (
-      typeof dragItem.current === "number" &&
-      typeof dragOverItem.current === "number"
-    ) {
-      const copyListItems = [...list];
-      const dragItemContent = copyListItems[dragItem.current];
-      copyListItems.splice(dragItem.current, 1);
-      copyListItems.splice(dragOverItem.current, 0, dragItemContent);
-      dragItem.current = null;
-      dragOverItem.current = null;
-      updatePositionTodos(copyListItems);
-    }
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    const index = +e.dataTransfer.getData("text");
+    const copyListItems = [...list];
+    const currentTodo = copyListItems[index];
+    copyListItems.splice(index, 1);
+    copyListItems.splice(newIndex, 0, currentTodo);
+    updatePositionTodos(copyListItems);
   };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) =>
+    e.preventDefault();
 
   return (
     <>
       <Status total={total} inProgress={inProgress} ready={ready} />
       <Search />
       <Input />
-      <List
-        locale={{ emptyText: "No todos" }}
-        bordered
-        dataSource={list}
-        renderItem={(todo, index) => (
-          <List.Item
-            onDragStart={() => (dragItem.current = index)}
-            onDragEnter={() => (dragOverItem.current = index)}
-            onDragEnd={drop}
-            key={index}
-            draggable>
-            <Checkbox
-              onChange={() => updateTodos(todo.id)}
-              checked={todo.isChecked}
-            />
-            <Text
-              delete={todo.isChecked}
-              style={{
-                margin: "0 auto 0 20px",
-                borderBottom: `2px solid ${
-                  todo.isChecked ? "#52c41a" : "#faad14"
-                }`,
-              }}>
-              {todo.text}
-            </Text>
-            <DeleteOutlined onClick={() => handleDelete(todo.id)} />
-          </List.Item>
-        )}
-      />
+      <div onDrop={handleDrop} onDragOver={handleDragOver}>
+        <List
+          locale={{ emptyText: "No todos" }}
+          bordered
+          dataSource={list}
+          renderItem={(todo, index) => {
+            const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+              e.dataTransfer.setData("text", `${index}`);
+            };
+            return (
+              <List.Item
+                onDragStart={handleDragStart}
+                onDragOver={() => setIndex(index)}
+                key={index}
+                draggable>
+                <Checkbox
+                  onChange={() => updateTodos(todo.id)}
+                  checked={todo.isChecked}
+                />
+                <Text
+                  delete={todo.isChecked}
+                  style={{
+                    margin: "0 auto 0 20px",
+                    borderBottom: `2px solid ${
+                      todo.isChecked ? "#52c41a" : "#faad14"
+                    }`,
+                  }}>
+                  {todo.text}
+                </Text>
+                <DeleteOutlined onClick={() => handleDelete(todo.id)} />
+              </List.Item>
+            );
+          }}
+        />
+      </div>
     </>
   );
 });
