@@ -14,12 +14,14 @@ const InputComp: FC = observer(() => {
   } = useStores();
 
   const handleAddTodo = (todoText: string) => {
-    addTodo({
-      id: uuidv4(),
-      text: todoText,
-      status: EStatus.InProgress,
-      isChecked: false,
-    });
+    if (todoText.length) {
+      addTodo({
+        id: uuidv4(),
+        text: todoText,
+        status: EStatus.InProgress,
+        isChecked: false,
+      });
+    }
   };
 
   return (
