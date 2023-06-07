@@ -13,19 +13,19 @@ const App = () => (
   <RootStoreContext.Provider value={new RootStore()}>
     <BrowserRouter basename="/todolist">
       <Navigation />
-      <Row gutter={{ xs: 2, sm: 16, md: 24, lg: 32, xl: 40 }}>
-        <Col
-          xs={{ span: 24, offset: 0 }}
-          sm={{ span: 20, offset: 2 }}
-          xl={{ span: 16, offset: 4 }}>
-          <div style={{ paddingTop: "70px", margin: "0px 16px 20px" }}>
+      <div style={{ paddingTop: "70px", margin: "0px 20px" }}>
+        <Row gutter={{ xs: 2, sm: 16, md: 24, lg: 32, xl: 40 }}>
+          <Col
+            xs={{ span: 24, offset: 0 }}
+            sm={{ span: 20, offset: 2 }}
+            xl={{ span: 16, offset: 4 }}>
             <Routes>
               <Route path="/" element={<Todos />} />
               <Route path="/archive" element={<Archive />} />
             </Routes>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </div>
     </BrowserRouter>
   </RootStoreContext.Provider>
 );
