@@ -7,7 +7,7 @@ const { Search } = Input;
 
 const SearchComp: FC = () => {
   const {
-    todos: { searchTodos },
+    todos: { searchTodos, clearSearchText },
   } = useStores();
 
   return (
@@ -19,6 +19,7 @@ const SearchComp: FC = () => {
         placeholder="Search text"
         allowClear
         onSearch={(text) => searchTodos(text)}
+        onChange={(e) => clearSearchText(e.target.value)}
         enterButton
       />
     </div>

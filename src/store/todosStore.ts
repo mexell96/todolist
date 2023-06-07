@@ -74,6 +74,13 @@ class CounterStore {
     );
   };
 
+  clearSearchText = (text: string) => {
+    if (text.length === 0) {
+      this.searchText = "";
+      this.searchTextTodos = [];
+    }
+  };
+
   updatePositionTodos = (todos: ITodo[]) => {
     this.todos = todos;
   };
