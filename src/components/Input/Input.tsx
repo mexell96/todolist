@@ -1,41 +1,42 @@
 import { FC } from "react";
-import { Button, Form, Input, Space } from "antd";
+import { Input } from "antd";
 import { v4 as uuidv4 } from "uuid";
+import { observer } from "mobx-react-lite";
 
 import { EStatus } from "../../pages/Todos/types";
 import { useStores } from "../../rootStoreContext";
 
-const InputComp: FC = () => {
+const { Search } = Input;
+
+const InputComp: FC = observer(() => {
   const {
-    todos: { addTodo },
+    todos: { addTodo, todoText, updateTodoText },
   } = useStores();
 
-  const [form] = Form.useForm();
-
-  const handlerAddTodo = ({ todoText }: { todoText: string }) => {
+  const handleAddTodo = (todoText: string) => {
     addTodo({
       id: uuidv4(),
       text: todoText,
       status: EStatus.InProgress,
       isChecked: false,
     });
-    form.resetFields();
   };
 
   return (
-    <Form form={form} layout="vertical" onFinish={handlerAddTodo}>
-      <Form.Item name="todoText">
-        <Input placeholder="Add todo" />
-      </Form.Item>
-      <Form.Item>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Add
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+    <div
+      style={{
+        marginBottom: "20px",
+      }}>
+      <Search
+        placeholder="Type your todo"
+        allowClear
+        onSearch={handleAddTodo}
+        onChange={(e) => updateTodoText(e.target.value)}
+        enterButton="Add"
+        value={todoText}
+      />
+    </div>
   );
-};
+});
 
 export default InputComp;

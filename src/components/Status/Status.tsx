@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Badge, Radio, RadioChangeEvent, Typography } from "antd";
+import { observer } from "mobx-react-lite";
 
 import { IStatusProps } from "./types";
 import { EStatus } from "../../pages/Todos/types";
@@ -7,13 +8,13 @@ import { useStores } from "../../rootStoreContext";
 
 const { Text } = Typography;
 
-const Status: FC<IStatusProps> = ({ total, inProgress, ready }) => {
+const Status: FC<IStatusProps> = observer(({ total, inProgress, ready }) => {
   const {
     todos: { filterStatus, setFilteredStatus },
   } = useStores();
 
   return (
-    <div style={{ margin: "0px 16px 20px" }}>
+    <div style={{ marginBottom: "20px" }}>
       <Radio.Group
         onChange={(e: RadioChangeEvent) => setFilteredStatus(e.target.value)}
         value={filterStatus}>
@@ -34,6 +35,6 @@ const Status: FC<IStatusProps> = ({ total, inProgress, ready }) => {
       </Radio.Group>
     </div>
   );
-};
+});
 
 export default Status;

@@ -28,6 +28,7 @@ class CounterStore {
   filterStatus: EStatus = EStatus.Total;
   searchText: string = "";
   searchTextTodos: ITodo[] = [];
+  todoText: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -35,6 +36,11 @@ class CounterStore {
 
   addTodo = (todo: ITodo) => {
     this.todos.push(todo);
+    this.todoText = "";
+  };
+
+  updateTodoText = (text: string) => {
+    this.todoText = text;
   };
 
   updateTodos = (id: string) => {

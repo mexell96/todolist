@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { Input } from "antd";
+import { observer } from "mobx-react-lite";
 
 import { useStores } from "../../rootStoreContext";
 
 const { Search } = Input;
 
-const SearchComp: FC = () => {
+const SearchComp: FC = observer(() => {
   const {
     todos: { searchTodos, clearSearchText },
   } = useStores();
@@ -24,6 +25,6 @@ const SearchComp: FC = () => {
       />
     </div>
   );
-};
+});
 
 export default SearchComp;

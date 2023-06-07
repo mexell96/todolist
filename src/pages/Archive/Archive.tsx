@@ -14,9 +14,6 @@ const Archive: FC = observer(() => {
   return (
     <List
       locale={{ emptyText: "No todos" }}
-      style={{
-        margin: "0px 16px 20px",
-      }}
       bordered
       dataSource={archiveTodos}
       renderItem={(todo) => (

@@ -12,7 +12,7 @@ const App = () => (
   <RootStoreContext.Provider value={new RootStore()}>
     <BrowserRouter basename="/todolist">
       <Navigation />
-      <div style={{ paddingTop: "70px" }}>
+      <div style={{ paddingTop: "70px", margin: "0px 16px 20px" }}>
         <Routes>
           <Route path="/" element={<Todos />} />
           <Route path="/archive" element={<Archive />} />
