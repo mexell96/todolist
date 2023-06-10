@@ -5,18 +5,25 @@ import { ClearOutlined, UnorderedListOutlined } from "@ant-design/icons";
 
 const items: MenuProps["items"] = [
   {
-    label: <Link to="/">Todos</Link>,
+    label: (
+      <Link to="/">
+        <UnorderedListOutlined />
+        <span>Todos</span>
+      </Link>
+    ),
     key: "",
-    icon: <UnorderedListOutlined />,
   },
   {
-    label: <Link to="/archive">Archive</Link>,
+    label: (
+      <Link to="/archive">
+        <ClearOutlined />
+        <span>Archive</span>
+      </Link>
+    ),
     key: "archive",
-    icon: <ClearOutlined />,
   },
 ];
-
-const Todos: FC = () => {
+const Navigation: FC = () => {
   const { pathname } = useLocation();
   const [current, setCurrent] = useState(pathname.split("/")[1]);
 
@@ -30,11 +37,10 @@ const Todos: FC = () => {
         position: "fixed",
         top: "0",
         width: "100%",
-        background: "white",
         zIndex: "1000",
       }}
     />
   );
 };
 
-export default Todos;
+export default Navigation;
